@@ -1,20 +1,22 @@
 import React from 'react';
-import './App.css';
 import {Header} from "components/Header/Header";
 import {TodoListContainer} from "components/TodoListContainer/TodoListContainer";
-import {Container} from "@material-ui/core";
+import {Box, Container} from "@material-ui/core";
 import {TodoListAdder} from "components/TodoListAdder/TodoListAdder";
+import {useAppStyles} from "styles/app.styles";
 
-function App() {
+
+export const App = () => {
+    const classes = useAppStyles();
     return (
-        <div className="App">
+        <Box className={classes.content}>
             <Header/>
             <TodoListAdder/>
             <Container fixed>
                 <TodoListContainer/>
             </Container>
-        </div>
+        </Box>
     );
 }
 
-export default App;
+

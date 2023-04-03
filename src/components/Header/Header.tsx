@@ -4,15 +4,13 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import {Box} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
         },
         title: {
             flexGrow: 1,
@@ -24,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Header = () => {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
+        <Box className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h2" className={classes.title}>
@@ -33,7 +31,7 @@ export const Header = () => {
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
-        </div>
+        </Box>
     );
 };
 

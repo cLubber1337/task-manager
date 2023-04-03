@@ -1,8 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {api, TodolistType} from "api/api";
 
-
-
 export type TodoStateType = {
     todoLists: TodolistType[]
 }
