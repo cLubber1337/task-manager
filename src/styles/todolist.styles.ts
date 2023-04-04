@@ -1,6 +1,6 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
-export const useTodoListStyles = makeStyles((theme: Theme) =>
+export const useTodoListStyles = makeStyles(() =>
     createStyles({
         content: {
             display: "flex",
@@ -12,11 +12,16 @@ export const useTodoListStyles = makeStyles((theme: Theme) =>
             paddingLeft: "8px"
         },
         button: {
-            marginLeft: "8px"
+            marginLeft: "16px"
         },
         divider: {
             height: "4px",
             marginTop: "12px"
+        },
+        textField: {
+            width: "270px",
+            height: "32px",
+            bottom: "14px"
         }
     }),
 );

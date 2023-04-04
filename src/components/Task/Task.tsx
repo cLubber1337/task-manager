@@ -11,24 +11,22 @@ export const Task = () => {
     return (
         <Box className={classes.content}>
             <List>
-                {["Eat dish, drink vodka, sleep", "Play Football", 1123123123, 112312311].map(task => {
+                {["Eat dish, drink vodka, sleep", "Play Football", 1123123123, 112312311].map((task, id) => {
                     return (
-                        <Box>
-                            <ListItem className={classes.listItem}>
-                                <FormControlLabel
-                                    control={<Checkbox />}
-                                    label={<Typography className={classes.title}>{task}</Typography>}
-                                />
-                                <Box component={"span"} className={classes.iconBlock}>
-                                    <IconButton size="small">
-                                        <EditSharpIcon color={"secondary"}/>
-                                    </IconButton>
-                                    <IconButton size="small">
-                                        <DeleteForeverSharpIcon color={"primary"}/>
-                                    </IconButton>
-                                </Box>
-                            </ListItem>
-                        </Box>
+                        <ListItem key={id} className={classes.listItem}>
+                            <FormControlLabel
+                                control={<Checkbox/>}
+                                label={<Typography className={classes.title}>{task}</Typography>}
+                            />
+                            <Box component={"span"} className={classes.iconBlock}>
+                                <IconButton size="small">
+                                    <EditSharpIcon color={"secondary"}/>
+                                </IconButton>
+                                <IconButton size="small">
+                                    <DeleteForeverSharpIcon color={"primary"}/>
+                                </IconButton>
+                            </Box>
+                        </ListItem>
                     )
                 })}
             </List>

@@ -5,7 +5,8 @@ export const useAppStyles = makeStyles(() =>
         content: {
             textAlign: "center",
             backgroundColor: "pink",
-            backgroundRepeat: "repeat"
+            backgroundRepeat: "repeat",
+            height: "100vh"
         },
     }),
 )
