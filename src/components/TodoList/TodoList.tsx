@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, {ChangeEvent, FC, memo, useEffect, useState} from 'react';
 import EditSharpIcon from '@material-ui/icons/EditSharp';
 import {Box, Divider, IconButton, TextField, Tooltip} from "@material-ui/core";
 import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
@@ -7,29 +7,43 @@ import Typography from "@material-ui/core/Typography";
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import {useTodoListStyles} from "styles/todolist.styles";
 import {Task} from "components/Task/Task";
-import {useAppDispatch} from "redux/store.hook";
-import {changeTitleTodoListThunk, removeTodoListThunk} from "redux/slices/todolist.slice";
+import {useAppDispatch, useAppSelector} from "redux/store.hook";
+import {changeTitleTodoListThunk, deleteTodoListThunk} from "redux/slices/todolist.slice";
+import {fetchTasks} from "redux/slices/task.slice";
+import {TaskType} from "api/api";
 
-export type TodoListType = {
+export type TodoListPropsType = {
     id: string
     title: string
+    tasks: TaskType[]
+
 }
 
-export const TodoList: FC<TodoListType> = ({title, id}) => {
+export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
     const classes = useTodoListStyles();
     const dispatch = useAppDispatch()
     const [newTitle, setNewTitle] = useState('')
     const [editTitle, setEditTitle] = useState(false)
 
+    useEffect(() => {
+        dispatch(fetchTasks(id))
+    }, [])
+
     const onTextFieldChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setNewTitle(event.target.value)
     }
-    const onDeleteTodoList = () => {
-        dispatch(removeTodoListThunk(id))
+    const onDeleteTodoListClick = () => {
+        dispatch(deleteTodoListThunk(id))
     }
     const onDoneEditClick = () => {
         dispatch(changeTitleTodoListThunk({id, title: newTitle}))
         setEditTitle(false)
+    }
+    const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Enter") {
+            dispatch(changeTitleTodoListThunk({id, title: newTitle}))
+            setEditTitle(false)
+        }
     }
     return (
         <>
@@ -39,6 +53,9 @@ export const TodoList: FC<TodoListType> = ({title, id}) => {
                     {title}
                 </Typography>}
                 {editTitle && <TextField autoFocus className={classes.textField} onChange={onTextFieldChange}
+                                         defaultValue={title}
+                                         onBlur={()=>setEditTitle(false)}
+                                         onKeyDown={onEnterKeyDown}
                                          label="Change the title"/>}
                 <Box>
                     {editTitle && <Tooltip title="Accept"><IconButton size="small" onClick={onDoneEditClick}>
@@ -51,7 +68,7 @@ export const TodoList: FC<TodoListType> = ({title, id}) => {
                         </IconButton>
                     </Tooltip>}
                     <Tooltip title="Delete TodoList">
-                        <IconButton onClick={onDeleteTodoList} size="small">
+                        <IconButton onClick={onDeleteTodoListClick} size="small">
                             <DeleteForeverSharpIcon color={"primary"}/>
                         </IconButton>
                     </Tooltip>
@@ -59,14 +76,14 @@ export const TodoList: FC<TodoListType> = ({title, id}) => {
             </Box>
             <Divider className={classes.divider}/>
 
-            <Task/>
+            <Task tasks={tasks}/>
 
             <Box mt={4}>
-                <Button variant="contained">All</Button>
-                <Button className={classes.button} color="secondary" variant="contained">Active</Button>
-                <Button className={classes.button} color="primary" variant="contained">Completed</Button>
+                <Button variant="contained" color="primary">All</Button>
+                <Button className={classes.button} variant="contained">Active</Button>
+                <Button className={classes.button} variant="contained">Completed</Button>
             </Box>
         </>
     );
-};
+});
 

@@ -14,6 +14,7 @@ export const useTodoListAdderStyles = makeStyles((theme: Theme) =>
             right: 0,
             backgroundColor: "whitesmoke",
             borderRadius: "5px",
+            textAlign: "center",
         },
         button: {
             width: "58px",

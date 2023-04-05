@@ -18,7 +18,12 @@ export const TodoListAdder = () => {
         dispatch(createTodoListThunk(title))
         setTitle("")
     }
-
+    const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === "Enter") {
+            dispatch(createTodoListThunk(title))
+            setTitle("")
+        }
+    }
 
     return (
         <Box className={classes.content}>
@@ -26,6 +31,7 @@ export const TodoListAdder = () => {
                        variant="outlined"
                        placeholder="Write the name of your Todolist"
                        value={title}
+                       onKeyDown={onEnterKeyDown}
                        onChange={onTextFieldChange}
             />
             <IconButton className={classes.button} onClick={onAddTodoListClick}>

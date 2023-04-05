@@ -1,22 +1,23 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {api, ItemType} from "api/api";
-import {TodoListType} from "components/TodoList/TodoList";
+import {api, TodolistType} from "api/api";
+
+
 
 export type TodoStateType = {
-    todoLists: ItemType[]
+    todoLists: TodolistType[]
 }
 
 export const fetchTodoLists = createAsyncThunk(
-    'todoLists/getNewTodoLists',
+    'todoLists/getTodoLists',
     async () => {
         const {data} = await api.getToDo()
         return data
     }
 )
-export const removeTodoListThunk = createAsyncThunk(
+export const deleteTodoListThunk = createAsyncThunk(
     'todoLists/removeTodoLists',
-    async (todolistId: string) => {
-        const {data} = await api.removeToDo(todolistId)
+    async (id: string) => {
+        const {data} = await api.deleteToDo(id)
         return data
     }
 )
@@ -29,9 +30,9 @@ export const createTodoListThunk = createAsyncThunk(
 )
 export const changeTitleTodoListThunk = createAsyncThunk(
     'todoLists/changeTitleTodoList',
-    async ({id, title}: TodoListType) => {
-        const {data} = await api.changeTitleToDo(id, title)
-        return data.data
+    async ({id, title}: {id: string, title: string} ) => {
+        const {data} = await api.updateToDo(id, title)
+        return data
     }
 )
 
@@ -47,7 +48,7 @@ const todolistSlice = createSlice({
             .addCase(fetchTodoLists.fulfilled, (state, action) => {
                 state.todoLists = action.payload
             })
-            .addCase(removeTodoListThunk.fulfilled, (state, action) => {
+            .addCase(deleteTodoListThunk.fulfilled, (state, action) => {
                 state.todoLists = state.todoLists.filter(tl => tl.id !== action.meta.arg)
             })
             .addCase(createTodoListThunk.fulfilled, (state, action) => {
