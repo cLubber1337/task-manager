@@ -1,42 +1,19 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Box, IconButton, TextField} from "@material-ui/core";
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import React, {useCallback} from 'react';
 import {useTodoListAdderStyles} from "styles/todolistAdder.styles";
 import {useAppDispatch} from "redux/store.hook";
 import {createTodoListThunk} from "redux/slices/todolist.slice";
+import {AddItemForm} from "components/common/AddItemForm";
 
 export const TodoListAdder = () => {
     const classes = useTodoListAdderStyles();
     const dispatch = useAppDispatch()
-    const [title, setTitle] = useState('')
 
-    const onTextFieldChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setTitle(event.target.value)
-    }
-
-    const onAddTodoListClick = () => {
+    const addTodoList = useCallback((title: string) => {
         dispatch(createTodoListThunk(title))
-        setTitle("")
-    }
-    const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === "Enter") {
-            dispatch(createTodoListThunk(title))
-            setTitle("")
-        }
-    }
+    },[dispatch])
+
 
     return (
-        <Box className={classes.content}>
-            <TextField className={classes.textField}
-                       variant="outlined"
-                       placeholder="Write the name of your Todolist"
-                       value={title}
-                       onKeyDown={onEnterKeyDown}
-                       onChange={onTextFieldChange}
-            />
-            <IconButton className={classes.button} onClick={onAddTodoListClick}>
-                <AddBoxIcon color={"secondary"} className={classes.icon}/>
-            </IconButton>
-        </Box>
+           <AddItemForm className={classes} addItem={addTodoList} placeholder="Write the name of your Todolist" />
     );
 };

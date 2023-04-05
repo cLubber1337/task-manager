@@ -1,39 +1,36 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import Typography from "@material-ui/core/Typography";
-import {Box, Checkbox, FormControlLabel, IconButton, List, ListItem, TextField, Tooltip} from "@material-ui/core";
+import {Box, Checkbox, FormControlLabel, IconButton, List, ListItem} from "@material-ui/core";
 import {useTaskStyles} from "styles/task.styles";
 import EditSharpIcon from "@material-ui/icons/EditSharp";
 import DeleteForeverSharpIcon from "@material-ui/icons/DeleteForeverSharp";
 import {TaskType} from "api/api";
-import AddBoxIcon from "@material-ui/icons/AddBox";
+import {AddItemForm} from "components/common/AddItemForm";
+import {useAppDispatch} from "redux/store.hook";
+import {createTasksThunk, deleteTasksThunk} from "redux/slices/task.slice";
 
 type TaskPropsType = {
     tasks: TaskType[]
+    todolistId: string
 }
 
-
-export const Task: FC<TaskPropsType> = ({tasks}) => {
+export const Task: FC<TaskPropsType> = ({tasks, todolistId}) => {
     const classes = useTaskStyles()
-    const onAddTodoListClick = () => {
-        console.log(123)
-    }
-    const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === "Enter") {
-            console.log(123)
-        }
-    }
-    return (
-        <Box className={classes.content}>
+    const dispatch = useAppDispatch()
 
-            <Box className={classes.adderTask}>
-                <TextField className={classes.textField} onKeyDown={onEnterKeyDown} placeholder="Add a new task"
-                           variant="outlined"/>
-                <Tooltip title="Add">
-                    <IconButton className={classes.button} onClick={onAddTodoListClick}>
-                        <AddBoxIcon color={"secondary"} className={classes.iconButton}/>
-                    </IconButton>
-                </Tooltip>
-            </Box>
+    const addTask = useCallback((title: string) => {
+        dispatch(createTasksThunk({todolistId, title}))
+    }, [dispatch, todolistId])
+
+    const deleteTask = useCallback((taskId: string) => {
+        dispatch(deleteTasksThunk({todolistId, taskId}))
+    }, [dispatch, todolistId])
+
+    return (
+        <Box className={classes.wrapper}>
+
+            <AddItemForm className={classes} addItem={addTask} placeholder="Add a new task"/>
+
             <List>
                 {tasks.map((task) => {
                     return (
@@ -46,7 +43,7 @@ export const Task: FC<TaskPropsType> = ({tasks}) => {
                                 <IconButton size="small">
                                     <EditSharpIcon color={"secondary"}/>
                                 </IconButton>
-                                <IconButton size="small">
+                                <IconButton size="small" onClick={() => deleteTask(task.id)}>
                                     <DeleteForeverSharpIcon color={"primary"}/>
                                 </IconButton>
                             </Box>

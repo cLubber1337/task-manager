@@ -2,7 +2,7 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 export const useTaskStyles = makeStyles((theme: Theme) =>
     createStyles({
-        content: {
+        wrapper: {
             marginTop: "16px",
         },
         title: {
@@ -32,7 +32,7 @@ export const useTaskStyles = makeStyles((theme: Theme) =>
             top: "2px",
             right: "2px"
         },
-        iconButton: {
+        icon: {
             width: "36px",
             height: "36px",
             cursor: "pointer",
@@ -40,7 +40,7 @@ export const useTaskStyles = makeStyles((theme: Theme) =>
             top: "0",
             right: "0"
         },
-        adderTask: {
+        form: {
             margin: "0 auto",
             position: "relative",
             maxWidth: "346px",

@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import {useTodoListStyles} from "styles/todolist.styles";
 import {Task} from "components/Task/Task";
-import {useAppDispatch, useAppSelector} from "redux/store.hook";
+import {useAppDispatch} from "redux/store.hook";
 import {changeTitleTodoListThunk, deleteTodoListThunk} from "redux/slices/todolist.slice";
 import {fetchTasks} from "redux/slices/task.slice";
 import {TaskType} from "api/api";
@@ -41,8 +41,7 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
     }
     const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "Enter") {
-            dispatch(changeTitleTodoListThunk({id, title: newTitle}))
-            setEditTitle(false)
+            onDoneEditClick()
         }
     }
     return (
@@ -58,7 +57,7 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
                                          onKeyDown={onEnterKeyDown}
                                          label="Change the title"/>}
                 <Box>
-                    {editTitle && <Tooltip title="Accept"><IconButton size="small" onClick={onDoneEditClick}>
+                    {editTitle && <Tooltip title="Accept"><IconButton size="small" onMouseDown={onDoneEditClick}>
                         <DoneOutlineRoundedIcon color={"secondary"}/>
                     </IconButton></Tooltip>}
 
@@ -76,7 +75,7 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
             </Box>
             <Divider className={classes.divider}/>
 
-            <Task tasks={tasks}/>
+            <Task tasks={tasks} todolistId={id}/>
 
             <Box mt={4}>
                 <Button variant="contained" color="primary">All</Button>
