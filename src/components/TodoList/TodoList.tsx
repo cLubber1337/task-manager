@@ -1,16 +1,15 @@
-import React, {ChangeEvent, FC, memo, useEffect, useState} from 'react';
-import EditSharpIcon from '@material-ui/icons/EditSharp';
-import {Box, Divider, IconButton, TextField, Tooltip} from "@material-ui/core";
-import DeleteForeverSharpIcon from '@material-ui/icons/DeleteForeverSharp';
+import React, {FC, memo, useCallback, useEffect} from 'react';
+import {Box, Divider} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import DoneOutlineRoundedIcon from '@material-ui/icons/DoneOutlineRounded';
 import {useTodoListStyles} from "styles/todolist.styles";
 import {Task} from "components/Task/Task";
 import {useAppDispatch} from "redux/store.hook";
 import {changeTitleTodoListThunk, deleteTodoListThunk} from "redux/slices/todolist.slice";
-import {fetchTasks} from "redux/slices/task.slice";
+import {createTasksThunk, fetchTasks} from "redux/slices/task.slice";
 import {TaskType} from "api/api";
+import {TextInputForm} from "components/common/TextInputForm";
+import {AddItemForm} from "components/common/AddItemForm";
+import {useTaskStyles} from "styles/task.styles";
 
 export type TodoListPropsType = {
     id: string
@@ -18,64 +17,38 @@ export type TodoListPropsType = {
     tasks: TaskType[]
 
 }
-
 export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
     const classes = useTodoListStyles();
+    const useTaskClasses = useTaskStyles()
     const dispatch = useAppDispatch()
-    const [newTitle, setNewTitle] = useState('')
-    const [editTitle, setEditTitle] = useState(false)
 
     useEffect(() => {
         dispatch(fetchTasks(id))
     }, [])
 
-    const onTextFieldChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        setNewTitle(event.target.value)
-    }
-    const onDeleteTodoListClick = () => {
+    const deleteTodoList = useCallback(() => {
         dispatch(deleteTodoListThunk(id))
-    }
-    const onDoneEditClick = () => {
-        dispatch(changeTitleTodoListThunk({id, title: newTitle}))
-        setEditTitle(false)
-    }
-    const onEnterKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        if (event.key === "Enter") {
-            onDoneEditClick()
-        }
-    }
+    }, [dispatch, id])
+
+    const changeTitleTodoList = useCallback((title: string) => {
+        dispatch(changeTitleTodoListThunk({id, title}))
+    }, [dispatch, id])
+    const addTask = useCallback((title: string) => {
+        dispatch(createTasksThunk({todolistId: id, title}))
+    }, [dispatch, id])
+
     return (
         <>
-            <Box mt={1} className={classes.content}>
-
-                {!editTitle && <Typography variant="h6" className={classes.title}>
-                    {title}
-                </Typography>}
-                {editTitle && <TextField autoFocus className={classes.textField} onChange={onTextFieldChange}
-                                         defaultValue={title}
-                                         onBlur={()=>setEditTitle(false)}
-                                         onKeyDown={onEnterKeyDown}
-                                         label="Change the title"/>}
-                <Box>
-                    {editTitle && <Tooltip title="Accept"><IconButton size="small" onMouseDown={onDoneEditClick}>
-                        <DoneOutlineRoundedIcon color={"secondary"}/>
-                    </IconButton></Tooltip>}
-
-                    {!editTitle && <Tooltip title="Edit title">
-                        <IconButton size="small" onClick={() => setEditTitle(true)}>
-                            <EditSharpIcon color={"secondary"}/>
-                        </IconButton>
-                    </Tooltip>}
-                    <Tooltip title="Delete TodoList">
-                        <IconButton onClick={onDeleteTodoListClick} size="small">
-                            <DeleteForeverSharpIcon color={"primary"}/>
-                        </IconButton>
-                    </Tooltip>
-                </Box>
-            </Box>
+            <TextInputForm className={classes}
+                           changeTitleCallBack={changeTitleTodoList}
+                           deleteCallBack={deleteTodoList}
+                           currentTitle={title}
+            />
             <Divider className={classes.divider}/>
 
-            <Task tasks={tasks} todolistId={id}/>
+            <AddItemForm className={useTaskClasses} addItem={addTask} placeholder="Add a new task"/>
+
+            {tasks.map(task => <Task key={task.id} task={task} todolistId={id}/>)}
 
             <Box mt={4}>
                 <Button variant="contained" color="primary">All</Button>

@@ -2,17 +2,19 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 export const useTaskStyles = makeStyles((theme: Theme) =>
     createStyles({
-        wrapper: {
-            marginTop: "16px",
+        content: {
+            display: "flex",
         },
         title: {
             fontFamily: "cursive",
-            paddingLeft: 0
+        },
+        buttonGroup: {
+
         },
         listItem: {
             display: "flex",
-            justifyContent: "space-between",
             padding: "0",
+            alignItems: "center",
             marginLeft: "4px",
             marginTop: "4px"
         },
@@ -22,6 +24,7 @@ export const useTaskStyles = makeStyles((theme: Theme) =>
             alignContent: "center",
             '& .MuiOutlinedInput-root': {
                 height: '40px',
+                maxWidth: "346px",
             },
         },
         button:{
@@ -41,6 +44,7 @@ export const useTaskStyles = makeStyles((theme: Theme) =>
             right: "0"
         },
         form: {
+            marginTop: "16px",
             margin: "0 auto",
             position: "relative",
             maxWidth: "346px",

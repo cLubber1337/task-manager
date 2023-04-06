@@ -3,13 +3,13 @@ import {Box, IconButton, TextField, Tooltip} from "@material-ui/core";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import {ClassNameMap} from "@material-ui/styles";
 
-type AddItemForm = {
+type AddItemFormType = {
     className: ClassNameMap
     addItem: (title: string) => void
     placeholder: string
 }
 
-export const AddItemForm: FC<AddItemForm> = ({className, addItem, placeholder}) => {
+export const AddItemForm: FC<AddItemFormType> = ({className, addItem, placeholder}) => {
     const classes = className
     const [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
@@ -32,23 +32,23 @@ export const AddItemForm: FC<AddItemForm> = ({className, addItem, placeholder}) 
             onAddItemClick()
         }
     }
-        return (
-            <Box className={classes.form}>
-                <TextField className={classes.textField}
-                           variant="outlined"
-                           error={!!error}
-                           placeholder={placeholder}
-                           value={title}
-                           onKeyDown={onEnterKeyDown}
-                           onChange={onTextFieldChange}
-                           helperText={error}
-                />
-                <Tooltip title="Add">
-                    <IconButton className={classes.button} onClick={onAddItemClick}>
-                        <AddBoxIcon color={"secondary"} className={classes.icon}/>
-                    </IconButton>
-                </Tooltip>
-            </Box>
-        );
-    };
+    return (
+        <Box className={classes.form}>
+            <TextField className={classes.textField}
+                       variant="outlined"
+                       error={!!error}
+                       placeholder={placeholder}
+                       value={title}
+                       onKeyDown={onEnterKeyDown}
+                       onChange={onTextFieldChange}
+                       helperText={error}
+            />
+            <Tooltip title="Add">
+                <IconButton className={classes.button} onClick={onAddItemClick}>
+                    <AddBoxIcon color={"secondary"} className={classes.icon}/>
+                </IconButton>
+            </Tooltip>
+        </Box>
+    );
+};
 
