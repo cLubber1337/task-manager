@@ -26,10 +26,11 @@ export const deleteTasksThunk = createAsyncThunk(
         return data.data
     }
 )
+
 export const updateTasksThunk = createAsyncThunk(
     'task/updateTask',
     async ([todolistId, taskId, domainModel]: [todolistId: string, taskId: string,
-        domainModel: UpdateDomainTaskModelType], { getState }) => {
+        domainModel: UpdateDomainTaskModelType], {getState}) => {
         const state = getState() as RootState
         const task = state.tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
@@ -49,7 +50,6 @@ export const updateTasksThunk = createAsyncThunk(
         return data
     }
 )
-
 
 const taskSlice = createSlice({
         name: "task",
@@ -85,14 +85,12 @@ const taskSlice = createSlice({
                 if (index !== -1) {
                     tasks[index] = {...tasks[index], ...action.meta.arg[2]}
                 }
-            } )
-
+            })
     }
 )
 
 export const {} = taskSlice.actions
 export default taskSlice.reducer
-
 
 export type UpdateDomainTaskModelType = {
     title?: string
@@ -103,7 +101,6 @@ export type UpdateDomainTaskModelType = {
     deadline?: string
 
 }
-
 export type TasksStateType = {
     [key: string]: TaskType[]
 }

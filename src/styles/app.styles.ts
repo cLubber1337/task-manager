@@ -3,10 +3,10 @@ import {createStyles, makeStyles} from "@material-ui/core/styles";
 export const useAppStyles = makeStyles(() =>
     createStyles({
         content: {
-            textAlign: "center",
             backgroundColor: "pink",
-            backgroundRepeat: "repeat",
-            height: "100vh"
+            backgroundRepeat: "no-repeat",
+            height: "100vh",
+            backgroundSize: "cover"
         },
     }),
 )

@@ -6,6 +6,7 @@ import {useAppDispatch} from "redux/store.hook";
 import {deleteTasksThunk, updateTasksThunk} from "redux/slices/task.slice";
 import {TextInputForm} from "components/common/TextInputForm";
 
+
 type TaskPropsType = {
     task: TaskType
     todolistId: string
@@ -26,14 +27,13 @@ export const Task: FC<TaskPropsType> = ({task, todolistId}) => {
 
     return (
         <Box className={classes.content}>
-            <Checkbox/>
+            <Checkbox className={classes.checkbox} color={"primary"}/>
             <TextInputForm className={classes}
-                                   deleteCallBack={deleteTask}
-                                   currentTitle={task.title}
-                                   changeTitleCallBack={changeTaskTitle}
-                    />
-
-
+                           deleteCallBack={deleteTask}
+                           currentTitle={task.title}
+                           changeTitleCallBack={changeTaskTitle}
+                           toolTipTitle="Delete task"
+            />
         </Box>
     );
 };

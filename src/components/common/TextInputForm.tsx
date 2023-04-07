@@ -6,25 +6,24 @@ import EditSharpIcon from "@material-ui/icons/EditSharp";
 import DeleteForeverSharpIcon from "@material-ui/icons/DeleteForeverSharp";
 import {ClassNameMap} from "@material-ui/styles";
 
-
-type UniversalTextInputPropsType = {
+type TextInputFormPropsType = {
     className: ClassNameMap
     deleteCallBack: () => void
     changeTitleCallBack: (title: string) => void
     currentTitle: string
+    toolTipTitle: string
 }
 
-
-export const TextInputForm: FC<UniversalTextInputPropsType> = ({
-                                                                   className,
-                                                                   deleteCallBack,
-                                                                   changeTitleCallBack,
-                                                                   currentTitle
-                                                               }) => {
+export const TextInputForm: FC<TextInputFormPropsType> = ({
+                                                              className,
+                                                              deleteCallBack,
+                                                              changeTitleCallBack,
+                                                              currentTitle,
+                                                              toolTipTitle,
+                                                          }) => {
     const classes = className
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState(currentTitle)
     const [editTitle, setEditTitle] = useState(false)
-
 
     const onTextFieldChange = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setTitle(event.target.value)
@@ -43,19 +42,18 @@ export const TextInputForm: FC<UniversalTextInputPropsType> = ({
     }
     return (
         <Box mt={1} className={classes.content}>
+            <Box>
+                {!editTitle && <Typography className={className.title}>
+                    {currentTitle}
+                </Typography>}
+                {editTitle && <TextField autoFocus className={className.editTextField} onChange={onTextFieldChange}
+                                         defaultValue={currentTitle}
+                                         onBlur={() => setEditTitle(false)}
+                                         onKeyDown={onEnterKeyDown}
+                                         label="Change the title"/>}
+            </Box>
 
-
-            {!editTitle && <Typography variant="h6" className={className.title}>
-                {currentTitle}
-            </Typography>}
-            {editTitle && <TextField autoFocus className={className.textField} onChange={onTextFieldChange}
-                                     defaultValue={currentTitle}
-                                     onBlur={() => setEditTitle(false)}
-                                     onKeyDown={onEnterKeyDown}
-                                     label="Change the title"/>}
-
-
-            <Box className={className.buttonGroup} >
+            <Box className={className.buttonGroup}>
                 {editTitle && <Tooltip title="Accept">
                     <IconButton size="small" onMouseDown={onDoneEditClick}>
                         <DoneOutlineRoundedIcon color={"secondary"}/>
@@ -66,7 +64,7 @@ export const TextInputForm: FC<UniversalTextInputPropsType> = ({
                         <EditSharpIcon color={"secondary"}/>
                     </IconButton>
                 </Tooltip>}
-                <Tooltip title="Delete TodoList">
+                <Tooltip title={toolTipTitle}>
                     <IconButton onClick={onDeleteTodoListClick} size="small">
                         <DeleteForeverSharpIcon color={"primary"}/>
                     </IconButton>

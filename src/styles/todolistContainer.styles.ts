@@ -1,6 +1,6 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
-export const useTodoListContainerStyles = makeStyles((theme: Theme) =>
+export const useTodoListContainerStyles = makeStyles(() =>
     createStyles({
         content: {
             justifyContent: "center",
@@ -11,7 +11,8 @@ export const useTodoListContainerStyles = makeStyles((theme: Theme) =>
         },
         paper: {
             padding: "12px",
-            minWidth: "350px"
+            minWidth: "320px",
+            maxWidth: "350px"
         },
     }),
 );

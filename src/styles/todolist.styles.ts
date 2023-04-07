@@ -8,22 +8,27 @@ export const useTodoListStyles = makeStyles(() =>
         },
         title: {
             fontFamily: "cursive",
-            paddingLeft: "8px"
+            paddingLeft: "8px",
+            fontSize: "22px"
         },
         button: {
             marginLeft: "16px"
         },
         divider: {
             height: "4px",
-            marginTop: "12px"
+            marginTop: "12px",
+            backgroundImage: 'linear-gradient(to right, purple, pink)',
         },
-        textField: {
+        editTextField: {
             width: "270px",
             height: "32px",
             bottom: "14px"
         },
         AddItemForm: {
             marginTop: "16px",
+        },
+        buttons: {
+            textAlign: "center"
         }
     }),
 );

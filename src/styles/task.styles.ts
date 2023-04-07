@@ -1,27 +1,31 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
-export const useTaskStyles = makeStyles((theme: Theme) =>
+export const useTaskStyles = makeStyles(() =>
     createStyles({
         content: {
             display: "flex",
+            justifyContent: "space-between",
+            marginTop: "4px",
+            alignItems: "center",
+            width: "100%"
         },
         title: {
             fontFamily: "cursive",
-        },
-        buttonGroup: {
-
-        },
-        listItem: {
-            display: "flex",
-            padding: "0",
-            alignItems: "center",
-            marginLeft: "4px",
-            marginTop: "4px"
+            width: "100%",
+            wordWrap: "break-word",
+            textAlign: "end"
         },
         textField: {
             display: "flex",
             textAlign: "center",
-            alignContent: "center",
+            width: "100%",
+            '& .MuiOutlinedInput-root': {
+                height: '40px',
+                maxWidth: "346px",
+            },
+        },
+        editTextField: {
+            width: "256px",
             '& .MuiOutlinedInput-root': {
                 height: '40px',
                 maxWidth: "346px",
@@ -47,7 +51,9 @@ export const useTaskStyles = makeStyles((theme: Theme) =>
             marginTop: "16px",
             margin: "0 auto",
             position: "relative",
-            maxWidth: "346px",
         },
+        checkbox: {
+            top: "2px"
+        }
     }),
 );

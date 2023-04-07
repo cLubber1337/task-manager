@@ -24,7 +24,7 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
 
     useEffect(() => {
         dispatch(fetchTasks(id))
-    }, [])
+    }, [dispatch,id])
 
     const deleteTodoList = useCallback(() => {
         dispatch(deleteTodoListThunk(id))
@@ -43,6 +43,7 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
                            changeTitleCallBack={changeTitleTodoList}
                            deleteCallBack={deleteTodoList}
                            currentTitle={title}
+                           toolTipTitle="Delete todoList"
             />
             <Divider className={classes.divider}/>
 
@@ -50,7 +51,8 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
 
             {tasks.map(task => <Task key={task.id} task={task} todolistId={id}/>)}
 
-            <Box mt={4}>
+
+            <Box mt={4} className={classes.buttons}>
                 <Button variant="contained" color="primary">All</Button>
                 <Button className={classes.button} variant="contained">Active</Button>
                 <Button className={classes.button} variant="contained">Completed</Button>
