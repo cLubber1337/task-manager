@@ -1,15 +1,15 @@
 import React, {FC, memo, useCallback, useEffect} from 'react';
 import {Box, Divider} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import {useTodoListStyles} from "styles/todolist.styles";
-import {Task} from "components/Task/Task";
-import {useAppDispatch} from "redux/store.hook";
-import {changeTitleTodoListThunk, deleteTodoListThunk} from "redux/slices/todolist.slice";
-import {createTasksThunk, fetchTasks} from "redux/slices/task.slice";
-import {TaskType} from "api/api";
-import {TextInputForm} from "components/common/TextInputForm";
-import {AddItemForm} from "components/common/AddItemForm";
-import {useTaskStyles} from "styles/task.styles";
+import {useTodoListStyles} from "features/TodoList/todolist.styles";
+import {Task} from "features/Task/Task";
+import {useAppDispatch} from "utils/store.hook";
+import {changeTitleTodoListThunk, deleteTodoListThunk} from "features/TodoList/todolist.slice";
+import {createTasksThunk, fetchTasks} from "features/Task/task.slice";
+import {TextInputForm} from "common/components/TextInputForm";
+import {AddItemForm} from "common/components/AddItemForm";
+import {useTaskStyles} from "features/Task/task.styles";
+import {TaskType} from "api/todolists.api";
 
 export type TodoListPropsType = {
     id: string

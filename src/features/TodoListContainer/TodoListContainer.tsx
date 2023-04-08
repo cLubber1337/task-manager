@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {Grid, Paper} from "@material-ui/core";
-import {useAppDispatch, useAppSelector} from "redux/store.hook";
-import {fetchTodoLists} from "redux/slices/todolist.slice";
-import {TodoList} from "components/TodoList/TodoList";
-import {getTodoLists} from "redux/selectors/todolist.selector";
-import {useTodoListContainerStyles} from "styles/todolistContainer.styles";
-import {getTasks} from "redux/selectors/task.selector";
+import {useAppDispatch, useAppSelector} from "utils/store.hook";
+import {fetchTodoLists} from "features/TodoList/todolist.slice";
+import {TodoList} from "features/TodoList/TodoList";
+import {getTodoLists} from "features/TodoList/todolist.selector";
+import {useTodoListContainerStyles} from "features/TodoListContainer/todolistContainer.styles";
+import {getTasks} from "features/Task/task.selector";
 
 
 export const TodoListContainer = () => {

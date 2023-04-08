@@ -1,10 +1,10 @@
 import React, {FC, useCallback} from 'react';
 import {Box, Checkbox} from "@material-ui/core";
-import {useTaskStyles} from "styles/task.styles";
-import {TaskType} from "api/api";
-import {useAppDispatch} from "redux/store.hook";
-import {deleteTasksThunk, updateTasksThunk} from "redux/slices/task.slice";
-import {TextInputForm} from "components/common/TextInputForm";
+import {useTaskStyles} from "features/Task/task.styles";
+import {useAppDispatch} from "utils/store.hook";
+import {deleteTasksThunk, updateTasksThunk} from "features/Task/task.slice";
+import {TextInputForm} from "common/components/TextInputForm";
+import {TaskType} from "api/todolists.api";
 
 
 type TaskPropsType = {
@@ -21,7 +21,7 @@ export const Task: FC<TaskPropsType> = ({task, todolistId}) => {
     }, [dispatch, todolistId, task.id])
 
     const changeTaskTitle = useCallback((title: string) => {
-        dispatch(updateTasksThunk([todolistId, task.id, {title}]))
+        dispatch(updateTasksThunk({taskId: task.id, domainModel: {title}, todolistId}))
     }, [dispatch, task.id, todolistId])
 
 

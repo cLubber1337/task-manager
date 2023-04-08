@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {App} from './App';
+import {App} from 'app/App';
 import {HashRouter as Router} from 'react-router-dom';
 import {createTheme} from "@material-ui/core";
 import {purple} from "@material-ui/core/colors";
 import {ThemeProvider} from "@material-ui/styles";
 import {Provider} from "react-redux";
-import store from "redux/store";
+import store from "app/store";
 
 const theme = createTheme({
     palette: {

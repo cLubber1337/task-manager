@@ -1,9 +1,9 @@
 import React from 'react';
-import {Header} from "components/Header/Header";
-import {TodoListContainer} from "components/TodoListContainer/TodoListContainer";
+import {Header} from "features/Header/Header";
+import {TodoListContainer} from "features/TodoListContainer/TodoListContainer";
 import {Box, Container} from "@material-ui/core";
-import {TodoListAdder} from "components/TodoListAdder/TodoListAdder";
-import {useAppStyles} from "styles/app.styles";
+import {TodoListAdder} from "features/TodoListAdder/TodoListAdder";
+import {useAppStyles} from "app/app.styles";
 
 
 export const App = () => {

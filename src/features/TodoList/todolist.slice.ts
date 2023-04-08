@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {api, TodolistType} from "api/api";
+import {todoListsApi, TodolistType} from "api/todolists.api";
+
 
 export type TodoStateType = {
     todoLists: TodolistType[]
@@ -8,28 +9,28 @@ export type TodoStateType = {
 export const fetchTodoLists = createAsyncThunk(
     'todoLists/getTodoLists',
     async () => {
-        const {data} = await api.getToDo()
+        const {data} = await todoListsApi.getTodoLists()
         return data
     }
 )
 export const deleteTodoListThunk = createAsyncThunk(
     'todoLists/removeTodoLists',
     async (id: string) => {
-        const {data} = await api.deleteToDo(id)
+        const {data} = await todoListsApi.deleteTodolist(id)
         return data
     }
 )
 export const createTodoListThunk = createAsyncThunk(
     'todoLists/createTodoList',
     async (title: string) => {
-        const {data} = await api.createToDo(title)
+        const {data} = await todoListsApi.createTodolist(title)
         return data.data
     }
 )
 export const changeTitleTodoListThunk = createAsyncThunk(
     'todoLists/changeTitleTodoList',
     async ({id, title}: {id: string, title: string} ) => {
-        const {data} = await api.updateToDo(id, title)
+        const {data} = await todoListsApi.updateTodolist(id, title)
         return data
     }
 )
