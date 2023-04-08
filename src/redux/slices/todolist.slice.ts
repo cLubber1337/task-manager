@@ -1,7 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {api, TodolistType} from "api/api";
 
-
 export type TodoStateType = {
     todoLists: TodolistType[]
 }
@@ -65,6 +64,12 @@ const todolistSlice = createSlice({
 export const {} = todolistSlice.actions
 export default todolistSlice.reducer
 
+export type FilterValuesType = 'all' | 'active' | 'completed';
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+export type TodolistDomainType = TodolistType & {
+    filter: FilterValuesType
+    entityStatus: RequestStatusType
+}
 
 
 

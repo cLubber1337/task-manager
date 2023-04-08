@@ -9,7 +9,8 @@ export const fetchTasks = createAsyncThunk(
     'task/getTasks',
     async (todolistId: string) => {
         const {data} = await api.getTasks(todolistId)
-        return data
+        const tasks = data.items
+        return {tasks, todolistId}
     }
 )
 export const createTasksThunk = createAsyncThunk(
@@ -57,7 +58,7 @@ const taskSlice = createSlice({
         reducers: {},
         extraReducers: builder => builder
             .addCase(fetchTasks.fulfilled, (state, action) => {
-                state[action.meta.arg] = action.payload.items
+                state[action.payload.todolistId] = action.payload.tasks
             })
             .addCase(fetchTodoLists.fulfilled, (state, action) => {
                 action.payload.forEach((tl) => {
@@ -91,6 +92,7 @@ const taskSlice = createSlice({
 
 export const {} = taskSlice.actions
 export default taskSlice.reducer
+
 
 export type UpdateDomainTaskModelType = {
     title?: string

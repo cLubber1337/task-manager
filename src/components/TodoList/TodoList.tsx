@@ -37,6 +37,9 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
         dispatch(createTasksThunk({todolistId: id, title}))
     }, [dispatch, id])
 
+
+
+
     return (
         <>
             <TextInputForm className={classes}
@@ -50,7 +53,6 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks}) => {
             <AddItemForm className={useTaskClasses} addItem={addTask} placeholder="Add a new task"/>
 
             {tasks.map(task => <Task key={task.id} task={task} todolistId={id}/>)}
-
 
             <Box mt={4} className={classes.buttons}>
                 <Button variant="contained" color="primary">All</Button>
