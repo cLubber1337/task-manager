@@ -10,6 +10,7 @@ import {
     UpdateTaskModelType
 } from "api/todolists.api";
 import {RootState} from "app/store";
+import {clearTasksAndTodoLists} from "common/actions";
 
 
 
@@ -45,22 +46,24 @@ export const createTasksThunk = createAsyncThunk<{ task: TaskType }, AddTaskArgT
         }
     }
 )
-export const deleteTasksThunk = createAsyncThunk<{}, DeleteTaskArgType>(
-    'task/deleteTask',
-    async (arg, thunkAPI) => {
+export const deleteTasksThunk = createAsyncThunk<DeleteTaskArgType,DeleteTaskArgType>(
+    'tasks/removeTask', async (arg, thunkAPI) => {
         const {rejectWithValue} = thunkAPI
         try {
-            const {data} = await todoListsApi.deleteTask(arg)
-            if (data.resultCode === ResultCode.Success) {
-                return {data}
+
+            const res = await todoListsApi.deleteTask(arg)
+            if (res.data.resultCode === ResultCode.Success) {
+
+                return arg
             } else {
-                return rejectWithValue("Error")
+
+                return rejectWithValue(null)
             }
         } catch (e) {
-            return rejectWithValue("Error")
+
+            return rejectWithValue(null)
         }
-    }
-)
+    })
 
 export const updateTasksThunk = createAsyncThunk<UpdateTaskArgType, UpdateTaskArgType>(
     'task/updateTask', async (arg, thunkAPI) => {
@@ -110,18 +113,18 @@ const taskSlice = createSlice({
                 })
             })
             .addCase(createTodoListThunk.fulfilled, (state, action) => {
-                state[action.payload.item.id] = []
+                state[action.payload.todolist.id] = []
             })
             .addCase(deleteTodoListThunk.fulfilled, (state, action) => {
-                delete state[action.meta.arg]
+                delete state[action.payload.id]
             })
             .addCase(createTasksThunk.fulfilled, (state, action) => {
                 const tasks = state[(action.payload.task.todoListId)]
                 tasks.unshift(action.payload.task)
             })
             .addCase(deleteTasksThunk.fulfilled, (state, action) => {
-                const tasks = state[action.meta.arg.todolistId]
-                const index = tasks.findIndex(t => t.id === action.meta.arg.taskId)
+                const tasks = state[action.payload.todolistId]
+                const index = tasks.findIndex(t => t.id === action.payload.taskId)
                 if (index !== -1) tasks.splice(index, 1)
             })
             .addCase(updateTasksThunk.fulfilled, (state, action) => {
@@ -130,6 +133,9 @@ const taskSlice = createSlice({
                 if (index !== -1) {
                     tasks[index] = {...tasks[index], ...action.payload.domainModel}
                 }
+            })
+            .addCase(clearTasksAndTodoLists, () => {
+                return {}
             })
     }
 )

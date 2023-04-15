@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {App} from 'app/App';
-import {HashRouter as Router} from 'react-router-dom';
+import {HashRouter, HashRouter as Router} from 'react-router-dom';
 import {createTheme} from "@material-ui/core";
 import {purple} from "@material-ui/core/colors";
 import {ThemeProvider} from "@material-ui/styles";
@@ -24,12 +24,12 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
-    <Router>
+    <HashRouter>
         <ThemeProvider theme={theme}>
             <Provider store={store}>
                 <App/>
             </Provider>
         </ThemeProvider>
-    </Router>,
+    </HashRouter>,
 );
 

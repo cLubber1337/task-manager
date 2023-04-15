@@ -1,6 +1,6 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, makeStyles} from "@material-ui/core/styles";
 
-export const useTodoListAdderStyles = makeStyles((theme: Theme) =>
+export const useTodoListAdderStyles = makeStyles(() =>
     createStyles({
         form: {
             position: "relative",

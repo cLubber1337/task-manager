@@ -43,7 +43,6 @@ export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks, todolist
         dispatch(createTasksThunk({todolistId: id, title}))
     }, [dispatch, id])
 
-
     const onAllClickHandler = useCallback(() => {
         dispatch(changeTodolistFilter({id: todolist.id, filter: "all"}))
     }, [todolist.id, changeTodolistFilter])

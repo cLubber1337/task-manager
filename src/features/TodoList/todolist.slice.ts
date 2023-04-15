@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {todoListsApi, TodolistType, UpdateTodolistTitleArgType} from "api/todolists.api";
 import {ResultCode} from "common/enums";
+import {clearTasksAndTodoLists} from "common/actions";
 
 export const fetchTodoLists = createAsyncThunk<{ todoLists: TodolistType[] }, void>
 ('todo/fetchTodoLists', async (_, thunkAPI) => {
@@ -17,22 +18,43 @@ export const fetchTodoLists = createAsyncThunk<{ todoLists: TodolistType[] }, vo
     }
 })
 
+export const deleteTodoListThunk = createAsyncThunk<{ id: string }, string>(
+    'todo/removeTodolist', async (id, thunkAPI) => {
+        const {rejectWithValue} = thunkAPI
+        try {
 
+            const res = await todoListsApi.deleteTodolist(id)
+            if (res.data.resultCode === ResultCode.Success) {
 
-export const deleteTodoListThunk = createAsyncThunk(
-    'todoLists/removeTodoLists',
-    async (id: string) => {
-        const {data} = await todoListsApi.deleteTodolist(id)
-        return data
+                return {id}
+            } else {
+
+                return rejectWithValue(null)
+            }
+        } catch (e) {
+
+            return rejectWithValue(null)
+        }
     }
 )
-export const createTodoListThunk = createAsyncThunk(
-    'todoLists/createTodoList',
-    async (title: string) => {
-        const {data} = await todoListsApi.createTodolist(title)
-        return data.data
-    }
-)
+export const createTodoListThunk = createAsyncThunk<{ todolist: TodolistType }, string>(
+    'todo/addTodolist', async (title, thunkAPI) => {
+        const {rejectWithValue} = thunkAPI
+        try {
+
+            const {data} = await todoListsApi.createTodolist(title)
+            if (data.resultCode === ResultCode.Success) {
+
+                return {todolist: data.data.item}
+            } else {
+
+                return rejectWithValue(null)
+            }
+        } catch (e) {
+
+            return rejectWithValue(null)
+        }
+    })
 export const changeTitleTodoListThunk = createAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>(
     'todo/changeTodolistTitle', async (arg, thunkAPI) => {
         const {rejectWithValue} = thunkAPI
@@ -55,7 +77,7 @@ export const changeTitleTodoListThunk = createAsyncThunk<UpdateTodolistTitleArgT
 
 const initialState: TodolistDomainType[] = []
 
-//action.payload.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+
 const todolistSlice = createSlice({
         name: "todoLists",
         initialState,
@@ -72,21 +94,25 @@ const todolistSlice = createSlice({
                 return action.payload.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
             })
             .addCase(deleteTodoListThunk.fulfilled, (state, action) => {
-                state.filter(tl => tl.id !== action.meta.arg)
+                const index = state.findIndex(todo => todo.id === action.payload.id)
+                if (index !== -1) state.splice(index, 1)
             })
             .addCase(createTodoListThunk.fulfilled, (state, action) => {
                 const newTodolist: TodolistDomainType = {
-                    ...action.payload.item,
+                    ...action.payload.todolist,
                     filter: 'all',
                     entityStatus: 'idle'
                 }
                 state.unshift(newTodolist)
             })
             .addCase(changeTitleTodoListThunk.fulfilled, (state, action) => {
-                const todoList = state.find(tl => tl.id === action.meta.arg.id)
+                const todoList = state.find(tl => tl.id === action.payload.id)
                 if (todoList) {
                     todoList.title = action.payload.title
                 }
+            })
+            .addCase(clearTasksAndTodoLists, () => {
+                return []
             })
     },
 )
