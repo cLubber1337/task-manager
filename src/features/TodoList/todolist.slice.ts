@@ -1,18 +1,24 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {todoListsApi, TodolistType} from "api/todolists.api";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {todoListsApi, TodolistType, UpdateTodolistTitleArgType} from "api/todolists.api";
+import {ResultCode} from "common/enums";
 
+export const fetchTodoLists = createAsyncThunk<{ todoLists: TodolistType[] }, void>
+('todo/fetchTodoLists', async (_, thunkAPI) => {
+    const {rejectWithValue} = thunkAPI
+    try {
 
-export type TodoStateType = {
-    todoLists: TodolistType[]
-}
-
-export const fetchTodoLists = createAsyncThunk(
-    'todoLists/getTodoLists',
-    async () => {
         const {data} = await todoListsApi.getTodoLists()
-        return data
+
+        return {todoLists: data}
+
+    } catch (e) {
+
+        return rejectWithValue(null)
     }
-)
+})
+
+
+
 export const deleteTodoListThunk = createAsyncThunk(
     'todoLists/removeTodoLists',
     async (id: string) => {
@@ -27,42 +33,65 @@ export const createTodoListThunk = createAsyncThunk(
         return data.data
     }
 )
-export const changeTitleTodoListThunk = createAsyncThunk(
-    'todoLists/changeTitleTodoList',
-    async ({id, title}: {id: string, title: string} ) => {
-        const {data} = await todoListsApi.updateTodolist(id, title)
-        return data
-    }
-)
+export const changeTitleTodoListThunk = createAsyncThunk<UpdateTodolistTitleArgType, UpdateTodolistTitleArgType>(
+    'todo/changeTodolistTitle', async (arg, thunkAPI) => {
+        const {rejectWithValue} = thunkAPI
+        try {
 
-const initialState: TodoStateType = {
-    todoLists: [],
-}
+            const res = await todoListsApi.updateTodolist(arg)
 
+            if (res.data.resultCode === ResultCode.Success) {
+
+                return arg
+            } else {
+
+                return rejectWithValue(null)
+            }
+        } catch (e) {
+
+            return rejectWithValue(null)
+        }
+    })
+
+const initialState: TodolistDomainType[] = []
+
+//action.payload.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
 const todolistSlice = createSlice({
         name: "todoLists",
         initialState,
-        reducers: {},
+        reducers: {
+            changeTodolistFilter: (state, action: PayloadAction<{ id: string, filter: FilterValuesType }>) => {
+                const todo = state.find(todo => todo.id === action.payload.id)
+                if (todo) {
+                    todo.filter = action.payload.filter
+                }
+            },
+        },
         extraReducers: (builder) => builder
             .addCase(fetchTodoLists.fulfilled, (state, action) => {
-                state.todoLists = action.payload
+                return action.payload.todoLists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
             })
             .addCase(deleteTodoListThunk.fulfilled, (state, action) => {
-                state.todoLists = state.todoLists.filter(tl => tl.id !== action.meta.arg)
+                state.filter(tl => tl.id !== action.meta.arg)
             })
             .addCase(createTodoListThunk.fulfilled, (state, action) => {
-                state.todoLists.unshift(action.payload.item)
+                const newTodolist: TodolistDomainType = {
+                    ...action.payload.item,
+                    filter: 'all',
+                    entityStatus: 'idle'
+                }
+                state.unshift(newTodolist)
             })
             .addCase(changeTitleTodoListThunk.fulfilled, (state, action) => {
-                const todoList = state.todoLists.find(tl => tl.id === action.meta.arg.id)
+                const todoList = state.find(tl => tl.id === action.meta.arg.id)
                 if (todoList) {
-                    todoList.title = action.meta.arg.title
+                    todoList.title = action.payload.title
                 }
             })
     },
 )
 
-export const {} = todolistSlice.actions
+export const {changeTodolistFilter} = todolistSlice.actions
 export default todolistSlice.reducer
 
 export type FilterValuesType = 'all' | 'active' | 'completed';

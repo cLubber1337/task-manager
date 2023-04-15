@@ -1,11 +1,12 @@
-import React, {FC, useCallback} from 'react';
+import React, {ChangeEvent, FC, useCallback} from 'react';
 import {Box, Checkbox} from "@material-ui/core";
 import {useTaskStyles} from "features/Task/task.styles";
 import {useAppDispatch} from "utils/store.hook";
 import {deleteTasksThunk, updateTasksThunk} from "features/Task/task.slice";
 import {TextInputForm} from "common/components/TextInputForm";
 import {TaskType} from "api/todolists.api";
-
+import {TaskStatuses} from "common/enums";
+import clsx from "clsx";
 
 type TaskPropsType = {
     task: TaskType
@@ -24,10 +25,19 @@ export const Task: FC<TaskPropsType> = ({task, todolistId}) => {
         dispatch(updateTasksThunk({taskId: task.id, domainModel: {title}, todolistId}))
     }, [dispatch, task.id, todolistId])
 
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(updateTasksThunk({taskId: task.id, domainModel: {status: e.currentTarget.checked ?
+                    TaskStatuses.Completed : TaskStatuses.New}, todolistId}))
+    }, [task.id, todolistId]);
+
 
     return (
-        <Box className={classes.content}>
-            <Checkbox className={classes.checkbox} color={"primary"}/>
+        <Box className={clsx(classes.content, task.status === TaskStatuses.Completed && classes.checked)   }>
+            <Checkbox onChange={onChangeHandler}
+                      checked={task.status === TaskStatuses.Completed}
+                      className={classes.checkbox}
+                      color={"primary"}/>
+
             <TextInputForm className={classes}
                            deleteCallBack={deleteTask}
                            currentTitle={task.title}

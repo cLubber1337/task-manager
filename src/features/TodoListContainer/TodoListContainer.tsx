@@ -24,7 +24,7 @@ export const TodoListContainer = () => {
                 let allTodolistTasks = tasks[tl.id]
                 return <Grid item className={classes.grid} key={tl.id}>
                     <Paper className={classes.paper}>
-                        <TodoList {...tl} tasks={allTodolistTasks}  />
+                        <TodoList {...tl} todolist={tl} tasks={allTodolistTasks}  />
                     </Paper>
                 </Grid>
             })}

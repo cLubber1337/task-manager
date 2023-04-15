@@ -9,6 +9,10 @@ export const useTaskStyles = makeStyles(() =>
             alignItems: "center",
             width: "100%"
         },
+        checked: {
+            textDecoration: "line-through",
+            opacity: 0.5,
+        },
         title: {
             fontFamily: "cursive",
             width: "100%",

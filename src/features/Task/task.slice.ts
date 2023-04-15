@@ -105,7 +105,7 @@ const taskSlice = createSlice({
                 state[action.payload.todolistId] = action.payload.tasks
             })
             .addCase(fetchTodoLists.fulfilled, (state, action) => {
-                action.payload.forEach((tl) => {
+                action.payload.todoLists.forEach((tl) => {
                     state[tl.id] = []
                 })
             })
