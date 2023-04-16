@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, useCallback} from 'react';
 import {Box, Checkbox} from "@material-ui/core";
 import {useTaskStyles} from "features/Task/task.styles";
-import {useAppDispatch, useAppSelector} from "utils/store.hook";
+import {useAppDispatch, useAppSelector} from "common/hooks/store.hook";
 import {deleteTasksThunk, updateTasksThunk} from "features/Task/task.slice";
 import {TextInputForm} from "common/components/TextInputForm";
 import {TaskType} from "api/todolists.api";

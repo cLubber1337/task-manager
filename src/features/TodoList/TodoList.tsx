@@ -3,7 +3,7 @@ import {Box, Divider} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {useTodoListStyles} from "features/TodoList/todolist.styles";
 import {Task} from "features/Task/Task";
-import {useAppDispatch, useAppSelector} from "utils/store.hook";
+import {useAppDispatch, useAppSelector} from "common/hooks/store.hook";
 import {
     changeTitleTodoListThunk,
     changeTodolistFilter,

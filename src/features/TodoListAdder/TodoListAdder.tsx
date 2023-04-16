@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import {useTodoListAdderStyles} from "features/TodoListAdder/todolistAdder.styles";
-import {useAppDispatch} from "utils/store.hook";
+import {useAppDispatch} from "common/hooks/store.hook";
 import {createTodoListThunk} from "features/TodoList/todolist.slice";
 import {AddItemForm} from "common/components/AddItemForm";
 
