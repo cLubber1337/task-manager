@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useState} from 'react';
+import React, {ChangeEvent, FC, memo, useState} from 'react';
 import Typography from "@material-ui/core/Typography";
 import {Box, IconButton, TextField, Tooltip} from "@material-ui/core";
 import DoneOutlineRoundedIcon from "@material-ui/icons/DoneOutlineRounded";
@@ -12,15 +12,17 @@ type TextInputFormPropsType = {
     changeTitleCallBack: (title: string) => void
     currentTitle: string
     toolTipTitle: string
+    disabled?: boolean
 }
 
-export const TextInputForm: FC<TextInputFormPropsType> = ({
-                                                              className,
-                                                              deleteCallBack,
-                                                              changeTitleCallBack,
-                                                              currentTitle,
-                                                              toolTipTitle,
-                                                          }) => {
+export const TextInputForm: FC<TextInputFormPropsType> = memo(({
+                                                                   className,
+                                                                   deleteCallBack,
+                                                                   changeTitleCallBack,
+                                                                   currentTitle,
+                                                                   toolTipTitle,
+                                                                   disabled = false
+                                                               }) => {
     const classes = className
     const [title, setTitle] = useState(currentTitle)
     const [editTitle, setEditTitle] = useState(false)
@@ -60,17 +62,17 @@ export const TextInputForm: FC<TextInputFormPropsType> = ({
                     </IconButton></Tooltip>}
 
                 {!editTitle && <Tooltip title="Edit title">
-                    <IconButton size="small" onClick={() => setEditTitle(true)}>
+                    <IconButton size="small" onClick={() => setEditTitle(true)} disabled={disabled}>
                         <EditSharpIcon color={"secondary"}/>
                     </IconButton>
                 </Tooltip>}
                 <Tooltip title={toolTipTitle}>
-                    <IconButton onClick={onDeleteTodoListClick} size="small">
-                        <DeleteForeverSharpIcon color={"primary"}/>
+                    <IconButton onClick={onDeleteTodoListClick} size="small" disabled={disabled}>
+                        <DeleteForeverSharpIcon color={"primary"}  />
                     </IconButton>
                 </Tooltip>
             </Box>
         </Box>
     );
-};
+})
 

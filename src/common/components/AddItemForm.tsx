@@ -7,10 +7,12 @@ type AddItemFormType = {
     className: ClassNameMap
     addItem: (title: string) => void
     placeholder: string
+
 }
 
 export const AddItemForm: FC<AddItemFormType> = ({className, addItem, placeholder}) => {
     const classes = className
+
     const [title, setTitle] = useState('')
     let [error, setError] = useState<string | null>(null)
 
@@ -44,7 +46,7 @@ export const AddItemForm: FC<AddItemFormType> = ({className, addItem, placeholde
                        helperText={error}
             />
             <Tooltip title="Add">
-                <IconButton className={classes.button} onClick={onAddItemClick}>
+                <IconButton className={classes.button} onClick={onAddItemClick} >
                     <AddBoxIcon color={"secondary"} className={classes.icon}/>
                 </IconButton>
             </Tooltip>

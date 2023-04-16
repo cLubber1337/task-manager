@@ -1,3 +1,3 @@
-import {RootState} from "app/store";
+import {AppRootStateType} from "app/store";
 
-export const getTasks = (state: RootState) => state.tasks
+export const getTasks = (state: AppRootStateType) => state.tasks

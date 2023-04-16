@@ -1,12 +1,13 @@
 import React, {ChangeEvent, FC, useCallback} from 'react';
 import {Box, Checkbox} from "@material-ui/core";
 import {useTaskStyles} from "features/Task/task.styles";
-import {useAppDispatch} from "utils/store.hook";
+import {useAppDispatch, useAppSelector} from "utils/store.hook";
 import {deleteTasksThunk, updateTasksThunk} from "features/Task/task.slice";
 import {TextInputForm} from "common/components/TextInputForm";
 import {TaskType} from "api/todolists.api";
 import {TaskStatuses} from "common/enums";
 import clsx from "clsx";
+import {getAppStatus} from "app/app.selector";
 
 type TaskPropsType = {
     task: TaskType
@@ -16,6 +17,7 @@ type TaskPropsType = {
 export const Task: FC<TaskPropsType> = ({task, todolistId}) => {
     const classes = useTaskStyles()
     const dispatch = useAppDispatch()
+    const status = useAppSelector(getAppStatus)
 
     const deleteTask = useCallback(() => {
         dispatch(deleteTasksThunk({todolistId, taskId: task.id}))
@@ -43,6 +45,7 @@ export const Task: FC<TaskPropsType> = ({task, todolistId}) => {
                            currentTitle={task.title}
                            changeTitleCallBack={changeTaskTitle}
                            toolTipTitle="Delete task"
+                           disabled={status === 'loading'}
             />
         </Box>
     );

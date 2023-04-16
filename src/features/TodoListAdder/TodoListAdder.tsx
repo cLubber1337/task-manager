@@ -9,7 +9,6 @@ export const TodoListAdder = () => {
     const dispatch = useAppDispatch()
 
     const addTodoList = useCallback((title: string) => {
-        console.log(title)
         dispatch(createTodoListThunk(title))
     },[dispatch])
 

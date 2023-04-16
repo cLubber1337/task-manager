@@ -1,3 +1,3 @@
-import {RootState} from "app/store";
+import {AppRootStateType} from "app/store";
 
-export const getTodoLists = (state: RootState) => state.todoLists
+export const getTodoLists = (state: AppRootStateType) => state.todoLists
