@@ -1,9 +1,10 @@
-import React, { FC, memo, useCallback, useEffect } from "react"
+import React, { FC, memo, useEffect } from "react"
 import { Box, Divider } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
 import { useTodoListStyles } from "features/TodoList/todolist.styles"
 import { Task } from "features/Task/Task"
 import {
+  FilterValuesType,
   todoListActions,
   TodolistDomainType,
   todoListThunks,
@@ -45,17 +46,9 @@ export const TodoList: FC<TodoListPropsType> = memo(({ title, id, tasks, todolis
     return createTasksThunk({ todolistId: id, title }).unwrap()
   }
 
-  const onAllClickHandler = useCallback(() => {
-    changeTodolistFilter({ id: todolist.id, filter: "all" })
-  }, [todolist.id, changeTodolistFilter])
-
-  const onActiveClickHandler = useCallback(() => {
-    changeTodolistFilter({ id: todolist.id, filter: "active" })
-  }, [todolist.id, changeTodolistFilter])
-
-  const onCompletedClickHandler = useCallback(() => {
-    changeTodolistFilter({ id: todolist.id, filter: "completed" })
-  }, [todolist.id, changeTodolistFilter])
+  const combinedFilterHandler = (filter: FilterValuesType) => {
+    changeTodolistFilter({ id: todolist.id, filter })
+  }
 
   let tasksForTodolist = tasks
 
@@ -89,14 +82,14 @@ export const TodoList: FC<TodoListPropsType> = memo(({ title, id, tasks, todolis
 
       <Box mt={4} className={classes.buttons}>
         <Button
-          onClick={onAllClickHandler}
+          onClick={() => combinedFilterHandler("all")}
           variant={todolist.filter === "all" ? "contained" : "text"}
           color="primary"
         >
           All
         </Button>
         <Button
-          onClick={onActiveClickHandler}
+          onClick={() => combinedFilterHandler("active")}
           className={classes.button}
           variant={todolist.filter === "active" ? "contained" : "text"}
           color="primary"
@@ -104,7 +97,7 @@ export const TodoList: FC<TodoListPropsType> = memo(({ title, id, tasks, todolis
           Active
         </Button>
         <Button
-          onClick={onCompletedClickHandler}
+          onClick={() => combinedFilterHandler("completed")}
           className={classes.button}
           variant={todolist.filter === "completed" ? "contained" : "text"}
           color="primary"

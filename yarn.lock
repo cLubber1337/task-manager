@@ -8110,6 +8110,11 @@ react-router-dom@^6.10.0:
     "@remix-run/router" "1.5.0"
     react-router "6.10.0"
 
+react-router-scroll-to-top@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-router-scroll-to-top/-/react-router-scroll-to-top-1.2.0.tgz#cfff5d8dd06e5450a25e67fc1ee0084eae2b6310"
+  integrity sha512-58jaFoQseRgz2IWTdlAcoocvJ+ujobu1jCq/xNIXfvx/jYGucBf/omVG6uz7KUtySloCJjAgxzjZfCdb1ZnMGg==
+
 react-router@6.10.0:
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.10.0.tgz#230f824fde9dd0270781b5cb497912de32c0a971"

@@ -8,10 +8,15 @@ type AddItemFormType = {
   className: ClassNameMap
   addItem: (title: string) => Promise<any>
   placeholder: string
-  disabled?: boolean
+  scrollToTop?: () => void
 }
 
-export const AddItemForm: FC<AddItemFormType> = ({ className, addItem, placeholder, disabled }) => {
+export const AddItemForm: FC<AddItemFormType> = ({
+  className,
+  addItem,
+  placeholder,
+  scrollToTop,
+}) => {
   const classes = className
 
   let [title, setTitle] = useState("")
@@ -27,9 +32,13 @@ export const AddItemForm: FC<AddItemFormType> = ({ className, addItem, placehold
       addItem(title)
         .then(() => {
           setTitle("")
+          if (scrollToTop) {
+            scrollToTop()
+          }
         })
         .catch((err: RejectValueType) => {
           if (err.data) {
+            setTitle("")
             const messages = err.data.messages
             setError(messages.length ? messages[0] : "Some error occurred, please try again later")
           }
@@ -57,7 +66,7 @@ export const AddItemForm: FC<AddItemFormType> = ({ className, addItem, placehold
         helperText={error}
       />
       <Tooltip title="Add">
-        <IconButton className={classes.button} onClick={onAddItemClick} disabled={disabled}>
+        <IconButton className={classes.button} onClick={onAddItemClick}>
           <AddBoxIcon color={"secondary"} className={classes.icon} />
         </IconButton>
       </Tooltip>

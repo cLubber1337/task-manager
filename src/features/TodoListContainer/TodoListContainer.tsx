@@ -29,7 +29,7 @@ export const TodoListContainer = () => {
   }
 
   return (
-    <Grid container spacing={2} className={classes.content}>
+    <Grid container spacing={1} className={classes.content}>
       {todoList.map((tl) => {
         let allTodolistTasks = tasks[tl.id]
         return (

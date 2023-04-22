@@ -12,12 +12,12 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Grid,
   TextField,
 } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
 import { useActions } from "common/hooks"
 import { useLoginStyles } from "features/Login/login.styles"
+import { Box } from "@mui/material"
 
 type FormikErrorType = Partial<Omit<LoginParamsType, "captcha">>
 
@@ -67,60 +67,62 @@ export const Login = () => {
   }
 
   return (
-    <Grid container justifyContent="center">
-      <Grid item xs={4}>
-        <form onSubmit={formik.handleSubmit}>
-          <FormControl>
-            <FormLabel>
-              <p>
-                To log in get registered{" "}
-                <a
-                  href={"https://social-network.samuraijs.com/"}
-                  target={"_blank"}
-                  rel="noreferrer"
-                >
-                  here
-                </a>
-              </p>
-              <p>or use common test account credentials:</p>
-              <p> Email: free@samuraijs.com</p>
-              <p>Password: free</p>
-            </FormLabel>
-            <FormGroup>
-              <TextField label="Email" margin="normal" {...formik.getFieldProps("email")} />
-              {formik.touched.email && formik.errors.email && (
-                <p className={classes.error}>{formik.errors.email}</p>
-              )}
-              <TextField
-                type="password"
-                label="Password"
-                margin="normal"
-                {...formik.getFieldProps("password")}
-              />
-              {formik.touched.password && formik.errors.password && (
-                <p className={classes.error}>{formik.errors.password}</p>
-              )}
-              <FormControlLabel
-                label={"Remember me"}
-                control={
-                  <Checkbox
-                    {...formik.getFieldProps("rememberMe")}
-                    checked={formik.values.rememberMe}
-                  />
-                }
-              />
-              <Button
-                type={"submit"}
-                variant={"contained"}
-                disabled={!(formik.isValid && formik.dirty)}
-                color={"primary"}
-              >
-                Login
-              </Button>
-            </FormGroup>
-          </FormControl>
-        </form>
-      </Grid>
-    </Grid>
+    <Box className={classes.main}>
+      <h1 className={classes.h1}>Login</h1>
+      <form onSubmit={formik.handleSubmit}>
+        <FormControl>
+          <FormGroup>
+            <TextField
+              error={Boolean(formik.touched.email && formik.errors.email)}
+              className={classes.textField}
+              label="Email"
+              variant="outlined"
+              {...formik.getFieldProps("email")}
+            />
+            {formik.touched.email && formik.errors.email && (
+              <p className={classes.error}>{formik.errors.email}</p>
+            )}
+            <TextField
+              className={classes.textField}
+              type="password"
+              label="Password"
+              variant="outlined"
+              {...formik.getFieldProps("password")}
+            />
+            {formik.touched.password && formik.errors.password && (
+              <p className={classes.error}>{formik.errors.password}</p>
+            )}
+            <FormControlLabel
+              label={"Remember me"}
+              control={
+                <Checkbox
+                  {...formik.getFieldProps("rememberMe")}
+                  checked={formik.values.rememberMe}
+                />
+              }
+            />
+            <Button
+              type={"submit"}
+              variant={"contained"}
+              disabled={!(formik.isValid && formik.dirty)}
+              color={"primary"}
+            >
+              Login
+            </Button>
+          </FormGroup>
+          <FormLabel>
+            <p>
+              To log in get registered{" "}
+              <a href={"https://social-network.samuraijs.com/"} target={"_blank"} rel="noreferrer">
+                here
+              </a>
+            </p>
+            <p>or use common test account credentials:</p>
+            <p> Email: free@samuraijs.com</p>
+            <p>Password: free</p>
+          </FormLabel>
+        </FormControl>
+      </form>
+    </Box>
   )
 }
