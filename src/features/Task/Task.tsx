@@ -10,12 +10,12 @@ import { getAppStatus } from "app/app.selector"
 import { useActions } from "common/hooks"
 import { taskThunks } from "features/Task/task.slice"
 
-type TaskPropsType = {
+type Props = {
   task: TaskType
   todolistId: string
 }
 
-export const Task: FC<TaskPropsType> = ({ task, todolistId }) => {
+export const Task: FC<Props> = ({ task, todolistId }) => {
   const classes = useTaskStyles()
   const { updateTasksThunk, deleteTasksThunk } = useActions(taskThunks)
   const status = useAppSelector(getAppStatus)
@@ -31,7 +31,7 @@ export const Task: FC<TaskPropsType> = ({ task, todolistId }) => {
     [task.id, todolistId]
   )
 
-  const onChangeHandler = useCallback(
+  const onTaskStatusChange = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       updateTasksThunk({
         taskId: task.id,
@@ -49,7 +49,7 @@ export const Task: FC<TaskPropsType> = ({ task, todolistId }) => {
       className={clsx(classes.content, task.status === TaskStatuses.Completed && classes.checked)}
     >
       <Checkbox
-        onChange={onChangeHandler}
+        onChange={onTaskStatusChange}
         checked={task.status === TaskStatuses.Completed}
         className={classes.checkbox}
         color={"primary"}

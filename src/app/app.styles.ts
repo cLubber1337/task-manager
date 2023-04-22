@@ -5,9 +5,9 @@ export const useAppStyles = makeStyles((theme) =>
     content: {
       backgroundColor: "pink",
       backgroundRepeat: "repeat-y",
-      height: "100%",
+      minHeight: "100vh",
       [theme.breakpoints.up("lg")]: {
-        height: "100vh",
+        minHeight: "100vh",
         backgroundRepeat: "repeat-y",
       },
     },

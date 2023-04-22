@@ -1,5 +1,4 @@
 import React from "react"
-import { createStyles, makeStyles } from "@material-ui/core/styles"
 import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
@@ -10,30 +9,13 @@ import { getAppStatus } from "app/app.selector"
 import { getIsLoggedIn } from "features/Login/auth.selector"
 import { useActions } from "common/hooks"
 import { authThunks } from "features/Login/auth.slice"
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      background: "pink",
-      position: "sticky",
-      paddingTop: "40px",
-      paddingBottom: "40px",
-      zIndex: 5,
-      cursor: "pointer",
-    },
-    title: {
-      flexGrow: 1,
-      fontFamily: "cursive",
-      textAlign: "center",
-    },
-  })
-)
+import { useHeaderStyles } from "features/Header/header.styles"
 
 export const Header = () => {
   const status = useAppSelector(getAppStatus)
   const isLoggedIn = useAppSelector(getIsLoggedIn)
   const { logoutThunk } = useActions(authThunks)
-  const logoutHandler = () => logoutThunk({})
+  const onLogoutClick = () => logoutThunk({})
 
   const scrollToTop = () => {
     const c = document.documentElement.scrollTop || document.body.scrollTop
@@ -43,7 +25,7 @@ export const Header = () => {
     }
   }
 
-  const classes = useStyles()
+  const classes = useHeaderStyles()
   return (
     <Box className={classes.root}>
       <AppBar>
@@ -53,7 +35,7 @@ export const Header = () => {
           </Typography>
 
           {isLoggedIn && (
-            <Button color="inherit" onClick={logoutHandler}>
+            <Button color="inherit" onClick={onLogoutClick}>
               Log out
             </Button>
           )}
