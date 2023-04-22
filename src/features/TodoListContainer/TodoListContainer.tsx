@@ -6,6 +6,8 @@ import {TodoList} from "features/TodoList/TodoList";
 import {getTodoLists} from "features/TodoList/todolist.selector";
 import {useTodoListContainerStyles} from "features/TodoListContainer/todolistContainer.styles";
 import {getTasks} from "features/Task/task.selector";
+import {getIsLoggedIn} from "features/Login/auth.selector";
+import {Navigate} from "react-router-dom";
 
 
 export const TodoListContainer = () => {
@@ -13,10 +15,14 @@ export const TodoListContainer = () => {
     const dispatch = useAppDispatch()
     const todoList = useAppSelector(getTodoLists)
     const tasks = useAppSelector(getTasks)
+    const isLoggedIn = useAppSelector(getIsLoggedIn)
     useEffect(() => {
         dispatch(fetchTodoLists())
     }, [])
 
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
 
     return (
         <Grid container spacing={2} className={classes.content}>

@@ -3,7 +3,7 @@ import {Box, Divider} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {useTodoListStyles} from "features/TodoList/todolist.styles";
 import {Task} from "features/Task/Task";
-import {useAppDispatch, useAppSelector} from "common/hooks/store.hook";
+import {useAppDispatch} from "common/hooks/store.hook";
 import {
     changeTitleTodoListThunk,
     changeTodolistFilter,
@@ -16,7 +16,6 @@ import {AddItemForm} from "common/components/AddItemForm";
 import {useTaskStyles} from "features/Task/task.styles";
 import {TaskType} from "api/todolists.api";
 import {TaskStatuses} from "common/enums";
-import {getAppStatus} from "app/app.selector";
 
 export type TodoListPropsType = {
     id: string
@@ -27,12 +26,12 @@ export type TodoListPropsType = {
 export const TodoList: FC<TodoListPropsType> = memo(({title, id, tasks, todolist}) => {
     const classes = useTodoListStyles();
     const useTaskClasses = useTaskStyles()
-    const status = useAppSelector(getAppStatus)
     const dispatch = useAppDispatch()
+
     useEffect(() => {
         dispatch(fetchTasks(id))
     }, [dispatch, id])
-    console.log(status)
+
     const deleteTodoList = useCallback(() => {
         dispatch(deleteTodoListThunk(id))
     }, [dispatch, id])

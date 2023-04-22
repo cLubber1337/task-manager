@@ -25,12 +25,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <ThemeProvider theme={theme}>
-        <BrowserRouter>
-            <Provider store={store}>
+        <Provider store={store}>
+            <BrowserRouter>
                 <App/>
-            </Provider>
-        </BrowserRouter>
-
+            </BrowserRouter>
+        </Provider>
     </ThemeProvider>
-);
+)
 
