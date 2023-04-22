@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import {App} from 'app/App';
-import {createTheme} from "@material-ui/core";
-import {purple} from "@material-ui/core/colors";
-import {ThemeProvider} from "@material-ui/styles";
-import {Provider} from "react-redux";
-import store from "app/store";
-import {BrowserRouter} from "react-router-dom";
+import React from "react"
+import ReactDOM from "react-dom/client"
+import "./index.css"
+import { App } from "app/App"
+import { createTheme } from "@material-ui/core"
+import { purple } from "@material-ui/core/colors"
+import { ThemeProvider } from "@material-ui/styles"
+import { Provider } from "react-redux"
+import store from "app/store"
+import { BrowserRouter } from "react-router-dom"
 
 const theme = createTheme({
     palette: {
@@ -18,18 +18,15 @@ const theme = createTheme({
             main: "#71ab71",
         },
     },
-});
+})
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
     <ThemeProvider theme={theme}>
         <Provider store={store}>
             <BrowserRouter>
-                <App/>
+                <App />
             </BrowserRouter>
         </Provider>
     </ThemeProvider>
 )
-

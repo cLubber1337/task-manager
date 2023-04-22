@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles"
 
 export const useTodoListAdderStyles = makeStyles(() =>
     createStyles({
@@ -6,7 +6,7 @@ export const useTodoListAdderStyles = makeStyles(() =>
             position: "relative",
             margin: "0 auto",
             width: "400px",
-            marginTop: "48px"
+            marginTop: "48px",
         },
         textField: {
             width: "100%",
@@ -31,6 +31,6 @@ export const useTodoListAdderStyles = makeStyles(() =>
             position: "absolute",
             top: 0,
             right: 0,
-        }
-    }),
-);
+        },
+    })
+)

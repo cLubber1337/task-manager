@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles"
 
 export const useTaskStyles = makeStyles(() =>
     createStyles({
@@ -7,7 +7,7 @@ export const useTaskStyles = makeStyles(() =>
             justifyContent: "space-between",
             marginTop: "4px",
             alignItems: "center",
-            width: "100%"
+            width: "100%",
         },
         checked: {
             textDecoration: "line-through",
@@ -17,31 +17,31 @@ export const useTaskStyles = makeStyles(() =>
             fontFamily: "cursive",
             width: "100%",
             wordWrap: "break-word",
-            textAlign: "end"
+            textAlign: "end",
         },
         textField: {
             display: "flex",
             textAlign: "center",
             width: "100%",
-            '& .MuiOutlinedInput-root': {
-                height: '40px',
+            "& .MuiOutlinedInput-root": {
+                height: "40px",
                 maxWidth: "346px",
             },
         },
         editTextField: {
             width: "256px",
-            '& .MuiOutlinedInput-root': {
-                height: '40px',
+            "& .MuiOutlinedInput-root": {
+                height: "40px",
                 maxWidth: "346px",
             },
         },
-        button:{
+        button: {
             width: "36px",
             height: "36px",
             cursor: "pointer",
             position: "absolute",
             top: "2px",
-            right: "2px"
+            right: "2px",
         },
         icon: {
             width: "36px",
@@ -49,7 +49,7 @@ export const useTaskStyles = makeStyles(() =>
             cursor: "pointer",
             position: "absolute",
             top: "0",
-            right: "0"
+            right: "0",
         },
         form: {
             marginTop: "16px",
@@ -57,7 +57,7 @@ export const useTaskStyles = makeStyles(() =>
             position: "relative",
         },
         checkbox: {
-            top: "2px"
-        }
-    }),
-);
+            top: "2px",
+        },
+    })
+)
