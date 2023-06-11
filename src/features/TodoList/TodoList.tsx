@@ -1,4 +1,4 @@
-import React, { FC, memo, useEffect } from "react"
+import React, { memo, useEffect } from "react"
 import { Box, Divider } from "@material-ui/core"
 import Button from "@material-ui/core/Button"
 import { useTodoListStyles } from "features/TodoList/todolist.styles"
@@ -17,13 +17,13 @@ import { TaskType } from "api/todolists.api"
 import { TaskStatuses } from "common/enums"
 import { useActions } from "common/hooks"
 
-export type TodoListPropsType = {
+export type Props = {
   id: string
   title: string
   tasks: TaskType[]
   todolist: TodolistDomainType
 }
-export const TodoList: FC<TodoListPropsType> = memo(({ title, id, tasks, todolist }) => {
+export const TodoList = memo(({ title, id, tasks, todolist }: Props) => {
   const classes = useTodoListStyles()
   const useTaskClasses = useTaskStyles()
   const { changeTodolistFilter } = useActions(todoListActions)

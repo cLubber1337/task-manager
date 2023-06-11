@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useCallback } from "react"
+import React, { ChangeEvent, memo, useCallback } from "react"
 import { Box, Checkbox } from "@material-ui/core"
 import { useTaskStyles } from "features/Task/task.styles"
 import { useAppSelector } from "common/hooks/store.hook"
@@ -15,7 +15,7 @@ type Props = {
   todolistId: string
 }
 
-export const Task: FC<Props> = ({ task, todolistId }) => {
+export const Task = memo(({ task, todolistId }: Props) => {
   const classes = useTaskStyles()
   const { updateTasksThunk, deleteTasksThunk } = useActions(taskThunks)
   const status = useAppSelector(getAppStatus)
@@ -65,4 +65,4 @@ export const Task: FC<Props> = ({ task, todolistId }) => {
       />
     </Box>
   )
-}
+})

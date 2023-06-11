@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, memo, useState } from "react"
+import React, { ChangeEvent, memo, useState } from "react"
 import Typography from "@material-ui/core/Typography"
 import { Box, IconButton, TextField, Tooltip } from "@material-ui/core"
 import DoneOutlineRoundedIcon from "@material-ui/icons/DoneOutlineRounded"
@@ -6,7 +6,7 @@ import EditSharpIcon from "@material-ui/icons/EditSharp"
 import DeleteForeverSharpIcon from "@material-ui/icons/DeleteForeverSharp"
 import { ClassNameMap } from "@material-ui/styles"
 
-type TextInputFormPropsType = {
+type Props = {
   className: ClassNameMap
   deleteCallBack: () => void
   changeTitleCallBack: (title: string) => void
@@ -15,7 +15,7 @@ type TextInputFormPropsType = {
   disabled?: boolean
 }
 
-export const TextInputForm: FC<TextInputFormPropsType> = memo(
+export const TextInputForm = memo(
   ({
     className,
     deleteCallBack,
@@ -23,7 +23,7 @@ export const TextInputForm: FC<TextInputFormPropsType> = memo(
     currentTitle,
     toolTipTitle,
     disabled = false,
-  }) => {
+  }: Props) => {
     const classes = className
     const [title, setTitle] = useState(currentTitle)
     const [editTitle, setEditTitle] = useState(false)

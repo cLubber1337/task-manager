@@ -31,7 +31,7 @@ export const Header = () => {
       <AppBar>
         <Toolbar>
           <Typography onClick={scrollToTop} variant="h2" className={classes.title}>
-            TodoList
+            Just do it!
           </Typography>
 
           {isLoggedIn && (

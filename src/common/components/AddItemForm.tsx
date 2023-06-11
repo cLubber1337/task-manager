@@ -1,22 +1,17 @@
-import React, { ChangeEvent, FC, useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import { Box, IconButton, TextField, Tooltip } from "@material-ui/core"
 import AddBoxIcon from "@material-ui/icons/AddBox"
 import { ClassNameMap } from "@material-ui/styles"
 import { RejectValueType } from "utils/createAppAsyncThunk"
 
-type AddItemFormType = {
+type Props = {
   className: ClassNameMap
   addItem: (title: string) => Promise<any>
   placeholder: string
   scrollToTop?: () => void
 }
 
-export const AddItemForm: FC<AddItemFormType> = ({
-  className,
-  addItem,
-  placeholder,
-  scrollToTop,
-}) => {
+export const AddItemForm = ({ className, addItem, placeholder, scrollToTop }: Props) => {
   const classes = className
 
   let [title, setTitle] = useState("")
