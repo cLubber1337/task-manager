@@ -5,9 +5,11 @@ export const useTaskStyles = makeStyles(() =>
     content: {
       display: "flex",
       justifyContent: "space-between",
+      gap: "8px",
       marginTop: "4px",
       alignItems: "center",
       width: "100%",
+      wordBreak: "break-all",
     },
     checked: {
       textDecoration: "line-through",
@@ -17,7 +19,6 @@ export const useTaskStyles = makeStyles(() =>
       fontFamily: "cursive",
       width: "100%",
       wordWrap: "break-word",
-      textAlign: "end",
     },
     textField: {
       display: "flex",
@@ -30,26 +31,14 @@ export const useTaskStyles = makeStyles(() =>
     },
     editTextField: {
       width: "100%",
-      "& .MuiOutlinedInput-root": {
-        height: "40px",
-        maxWidth: "346px",
-      },
     },
     button: {
-      width: "36px",
-      height: "36px",
-      cursor: "pointer",
       position: "absolute",
-      top: "2px",
-      right: "2px",
+      top: "-4px",
+      right: "-2px",
     },
-    icon: {
-      width: "36px",
-      height: "36px",
-      cursor: "pointer",
-      position: "absolute",
-      top: "0",
-      right: "0",
+    buttonGroup: {
+      display: "flex",
     },
     form: {
       marginTop: "16px",

@@ -5,6 +5,8 @@ export const useTodoListStyles = makeStyles(() =>
     content: {
       display: "flex",
       justifyContent: "space-between",
+      wordBreak: "break-all",
+      gap: "8px",
     },
     title: {
       fontFamily: "cursive",
@@ -29,9 +31,14 @@ export const useTodoListStyles = makeStyles(() =>
     },
     AddItemForm: {
       marginTop: "16px",
+      position: "relative",
     },
     buttons: {
       textAlign: "center",
+    },
+    buttonGroup: {
+      display: "flex",
+      justifyContent: "center",
     },
   })
 )

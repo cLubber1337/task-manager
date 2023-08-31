@@ -6,7 +6,7 @@ export const useLoginStyles = makeStyles(() =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
+      marginTop: "100px",
       flexDirection: "column",
     },
     error: {
